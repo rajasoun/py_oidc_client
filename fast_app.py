@@ -1,33 +1,33 @@
+#!/usr/bin/env python3
 import json
+
+from authlib.integrations.starlette_client import OAuth
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, RedirectResponse
 from starlette.config import Config
 from starlette.middleware.sessions import SessionMiddleware
-
-from fastapi.responses import HTMLResponse, RedirectResponse
-from authlib.integrations.starlette_client import OAuth
-
-from fastapi import FastAPI, Request
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="!secret")
 config = Config(".env")
 oauth = OAuth(config)
 
-oidc_provider_conf_url = config('provider_url')+ \
-                            '/.well-known/openid-configuration'
+oidc_provider_conf_url = config('provider_url') + \
+                         '/.well-known/openid-configuration'
 
 oauth.register(
     name='oidc',
-    server_metadata_url=oidc_provider_conf_url ,
+    server_metadata_url=oidc_provider_conf_url,
     client_id=config('client_id'),
     client_secret=config('client_secret'),
     client_kwargs={
         'scope': 'openid email profile'
     }
-)   
+)
 
 
-## add a custom header X-Process-Time containing the time in seconds that it took to process 
-## the request and generate a response
+# # add a custom header X-Process-Time containing the time in seconds that it took to process the request and
+# generate a response
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     import time
@@ -71,6 +71,12 @@ async def logout(request):
     return RedirectResponse(url='/')
 
 
+@app.get("/ping")
+def ping():
+    return {"status": "ok"}
+
+
 if __name__ == '__main__':
     import uvicorn
+
     uvicorn.run(app, host='0.0.0.0', port=3000)
