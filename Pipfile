@@ -11,6 +11,7 @@ httpx = "*"
 starlette = "*"
 uvicorn = "*"
 itsdangerous = "*"
+fastapi = "*"
 
 [requires]
 python_version = "3.8"
