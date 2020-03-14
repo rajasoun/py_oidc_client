@@ -32,11 +32,10 @@ $ cat https://accounts.google.com/.well-known/openid-configuration # For Google:
 $ cat https://cloudsso.cisco.com/.well-known/openid-configuration # For Cisco
 ```
 
-## Docker Compose
+## Auth Sandbox 
 
 ```
-$ docker-compose -f sso.yml build
-$ docker-compose -f sso.yml up
+$ ./sandbox.bash 
 ```
 
 ## OAuth2 Flow
