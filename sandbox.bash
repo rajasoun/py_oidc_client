@@ -41,9 +41,9 @@ choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
     up)
       echo "Bring Up Auth Application Stack"
-      docker run -d --name="cli-logs" --rm \
-             --volume=/var/run/docker.sock:/var/run/docker.sock \
-             --publish=127.0.0.1:8989:80 gliderlabs/logspout
+      # docker run -d --name="cli-logs" --rm \
+      #        --volume=/var/run/docker.sock:/var/run/docker.sock \
+      #        --publish=127.0.0.1:8989:80 gliderlabs/logspout
       docker-compose ${COMPOSE_FILES} up --build -d
       wait-for-url "http://localhost:3000" 
       url_check "http://localhost:3000" 
@@ -61,7 +61,8 @@ case $choice in
       ;;
     logs)
       echo "Containers Log..."
-      curl http://127.0.0.1:8989/logs
+      # curl http://127.0.0.1:8989/logs
+      docker-compose ${COMPOSE_FILES}  logs -f
       ;;
     *)  help ;;
 esac
