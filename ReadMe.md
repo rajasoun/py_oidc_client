@@ -5,10 +5,10 @@
 In Terminal :
 
 ```
-$ brew install pyenv
-$ pyenv install 3.8.2
-$ python -m venv .venv
+$ python3 -m venv .venv
 $ source .venv/bin/activate
+$ pip3 install pipenv
+$ pipenv install
 ```
 
 ## OIDC Client Configuration
