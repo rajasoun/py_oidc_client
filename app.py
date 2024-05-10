@@ -39,18 +39,34 @@ async def add_process_time_header(request: Request, call_next):
     return response
 
 
+def read_users_file(filename='users.txt'):
+    with open(filename, 'r') as file:
+        users = file.read().splitlines()
+    return users
+
+def is_user_authorized(user, users):
+    return user['email'] in users
+
+def generate_html_response(content, link_text, link_href):
+    return HTMLResponse(f'<h1>{content}</h1><a href="{link_href}">{link_text}</a>')
+
+def process_authorized_user(user):
+    user_data = json.dumps(user)
+    html_content = f'<pre>{user_data}</pre><a href="/logout">logout</a>'
+    return HTMLResponse(html_content)
+
 @app.route('/')
 async def homepage(request):
     user = request.session.get('user')
-    if user:
-        data = json.dumps(user)
-        html = (
-            f'<pre>{data}</pre>'
-            '<a href="/logout">logout</a>'
-        )
-        return HTMLResponse(html)
-    return HTMLResponse('<a href="/login">login</a>')
+    if not user:
+        return generate_html_response('Please login to continue', 'login', '/login')
 
+    users = read_users_file()
+    if not is_user_authorized(user, users):
+        return generate_html_response('Unauthorized', 'login', '/login')
+    
+    # Process authorized user
+    return process_authorized_user(user)
 
 @app.route('/login')
 async def login(request):
@@ -78,7 +94,7 @@ async def logout(request):
     return RedirectResponse(url='/')
 
 
-@app.get("/ping")
+@app.get("/health")
 def ping():
     return {"status": "ok"}
 
