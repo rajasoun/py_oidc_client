@@ -5,10 +5,8 @@
 In Terminal :
 
 ```
-$ python3 -m venv .venv
-$ source .venv/bin/activate
-$ pip3 install pipenv
-$ pipenv install
+$ poetry shell
+$ poetry install
 ```
 
 ## OIDC Client Configuration
@@ -27,8 +25,6 @@ Populate values for
 
 
 ```
-$ cat https://accounts.google.com/.well-known/openid-configuration # For Google:
-
 $ cat https://cloudsso.cisco.com/.well-known/openid-configuration # For Cisco
 ```
 

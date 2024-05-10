@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "py-oidc-client"
+version = "0.1.0"
+description = ""
+authors = ["Raja Soundaramourty <rajasoun@icloud.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+authlib = "^1.3.0"
+httpx = "^0.27.0"
+starlette = "^0.37.2"
+uvicorn = "^0.29.0"
+itsdangerous = "^2.2.0"
+fastapi = "^0.111.0"
+loguru = "^0.7.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

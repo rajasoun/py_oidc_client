@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-COMPOSE_FILES=" -f auth.yml"
+COMPOSE_FILES=" -f docker-compose.yml"
 
 function help(){
     echo "Usage: $0  {up|down|status|logs}" >&2
